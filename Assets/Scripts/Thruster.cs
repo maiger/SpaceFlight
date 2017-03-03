@@ -28,7 +28,7 @@ public class Thruster : MonoBehaviour {
     {
         if (Input.GetKey(key))
         {
-            rb.AddForce(transform.up * force);
+            rb.AddForce(transform.right * force);
             jet.Play();
             //Debug.Log("Thrusting!");
         }
