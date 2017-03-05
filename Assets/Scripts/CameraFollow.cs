@@ -57,6 +57,8 @@ public class CameraFollow : MonoBehaviour {
             m_LookAheadPos = Vector3.MoveTowards(m_LookAheadPos, Vector3.zero, Time.deltaTime * lookAheadReturnSpeed);
         }
 
+        // FIX: Looking ahead not working in Y direction. Also should be based on where ship is pointing, not
+        // where ship is traveling.
         Vector3 aheadTargetPos = target.position + m_LookAheadPos + Vector3.forward * m_OffsetZ;
         Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref m_CurrentVelocity, damping);
 

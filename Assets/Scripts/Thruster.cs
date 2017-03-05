@@ -16,29 +16,35 @@ public class Thruster : MonoBehaviour {
 
     private Rigidbody2D rb;
 
-	// Use this for initialization
+    private bool fireThruster = false;
+
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
         jet.Stop();
-
 	}
 
-    // FIX: Getting user input in fixedupdate will likely end up with input loss
-    private void FixedUpdate()
+    private void Update()
     {
         if (Input.GetKeyDown(key))
         {
             jet.Play();
-        }
-
-        if (Input.GetKey(key))
-        {
-            rb.AddForce(transform.right * force);
+            fireThruster = true;
+            Debug.Log("KeyDown");
         }
 
         if (Input.GetKeyUp(key))
         {
             jet.Stop();
+            fireThruster = false;
+            Debug.Log("KeyUp");
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (fireThruster)
+        {
+            rb.AddForce(transform.right * force);
         }
     }
 }
