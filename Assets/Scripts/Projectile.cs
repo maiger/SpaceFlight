@@ -4,7 +4,7 @@ public class Projectile : MonoBehaviour {
 
     [SerializeField]
     [Tooltip("Speed of projectile")]
-    int moveSpeed = 20;
+    private int moveSpeed = 20;
 
     void Update()
     {

@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 859385285}
   m_Layer: 0
   m_Name: ShipBody
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -615,6 +615,7 @@ GameObject:
   - component: {fileID: 1026033389}
   - component: {fileID: 1026033388}
   - component: {fileID: 1026033387}
+  - component: {fileID: 1026033392}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -690,6 +691,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1026033392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1026033386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a21cd00df86a444fa73635fae2efe69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 859385282}
+  damping: 0
+  lookAheadFactor: 0
+  lookAheadReturnSpeed: 0
+  lookAheadMoveThreshold: 0
+  yPosRestriction: Infinity
+  xPosRestriction: Infinity
 --- !u!1001 &1069846869
 Prefab:
   m_ObjectHideFlags: 0

@@ -5,9 +5,9 @@ public class ShipBody : MonoBehaviour {
 
     [SerializeField]
     [Tooltip("Can set a custom center of mass for the object. Basically a pivot point when applying forces e.g. with thrusters")]
-    Transform centerOfMass;
+    private Transform centerOfMass;
 
-    Rigidbody2D rb;
+    private Rigidbody2D rb;
 
 	// Use this for initialization
 	void Start () {

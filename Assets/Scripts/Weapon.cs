@@ -5,21 +5,21 @@ public class Weapon : MonoBehaviour {
 
     [SerializeField]
     [Tooltip("Projectile the weapon uses")]
-    GameObject projectile;
+    private GameObject projectile;
 
     [SerializeField]
     [Tooltip("Point to spawn projectile")]
-    Transform firePoint;
+    private Transform firePoint;
 
     [SerializeField]
     [Tooltip("Force to be applied to weapon when fired")]
-    float force;
+    private float force;
 
     [SerializeField]
     [Tooltip("Button to activate weapon")]
-    KeyCode key;
+    private KeyCode key;
 
-    Rigidbody2D rb;
+    private Rigidbody2D rb;
 
     void Start()
     {

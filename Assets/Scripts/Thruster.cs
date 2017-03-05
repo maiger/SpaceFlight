@@ -5,16 +5,16 @@ public class Thruster : MonoBehaviour {
 
     [SerializeField]
     [Tooltip("Button to activate thruster")]
-    KeyCode key;
+    private KeyCode key;
 
     [SerializeField]
     [Tooltip("Force of thruster")]
-    float force = 10;
+    private float force = 10;
 
     [SerializeField]
-    ParticleSystem jet;
+    private ParticleSystem jet;
 
-    Rigidbody2D rb;
+    private Rigidbody2D rb;
 
 	// Use this for initialization
 	void Start () {
@@ -26,11 +26,14 @@ public class Thruster : MonoBehaviour {
     // FIX: Getting user input in fixedupdate will likely end up with input loss
     private void FixedUpdate()
     {
+        if (Input.GetKeyDown(key))
+        {
+            jet.Play();
+        }
+
         if (Input.GetKey(key))
         {
             rb.AddForce(transform.right * force);
-            jet.Play();
-            //Debug.Log("Thrusting!");
         }
 
         if (Input.GetKeyUp(key))
