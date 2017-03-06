@@ -5,7 +5,7 @@ public class Thruster : MonoBehaviour {
 
     [SerializeField]
     [Tooltip("Button to activate thruster")]
-    private KeyCode key;
+    private KeyCode[] keys;
 
     [SerializeField]
     [Tooltip("Force of thruster")]
@@ -24,6 +24,14 @@ public class Thruster : MonoBehaviour {
 	}
 
     private void Update()
+    {
+        foreach (KeyCode key in keys)
+        {
+            CheckThrusterInput(key);
+        }
+    }
+
+    private void CheckThrusterInput(KeyCode key)
     {
         if (Input.GetKeyDown(key))
         {
