@@ -3,33 +3,33 @@
 [RequireComponent(typeof(Rigidbody2D))]
 public class Thruster : MonoBehaviour {
 
-    [SerializeField]
-    [Tooltip("Button to activate thruster")]
-    private KeyCode[] keys;
+    //[SerializeField]
+    //[Tooltip("Button to activate thruster")]
+    //private KeyCode[] keys;
 
     [SerializeField]
     [Tooltip("Force of thruster")]
     private float force = 10;
 
     [SerializeField]
-    private ParticleSystem jet;
+    public ParticleSystem jet;
 
     private Rigidbody2D rb;
 
-    private bool fireThruster = false;
+    public bool fireThruster = false;
 
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
         jet.Stop();
 	}
 
-    private void Update()
-    {
-        foreach (KeyCode key in keys)
-        {
-            CheckThrusterInput(key);
-        }
-    }
+    //private void Update()
+    //{
+    //    foreach (KeyCode key in keys)
+    //    {
+    //        CheckThrusterInput(key);
+    //    }
+    //}
 
     private void CheckThrusterInput(KeyCode key)
     {
