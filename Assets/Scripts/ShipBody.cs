@@ -32,9 +32,9 @@ public class ShipBody : MonoBehaviour {
     private Weapon[] weapons;
 
     private List<Thruster> thrusterForwards;
-    //private Thruster[] thrusterBackwards;
-    //private Thruster[] thrusterLeft;
-    //private Thruster[] thrusterRight;
+    private List<Thruster> thrusterBackwards;
+    private List<Thruster> thrusterLeft;
+    private List<Thruster> thrusterRight;
     //private Thruster[] thrusterRotateLeft;
     //private Thruster[] thrusterRotateRight;
 
@@ -47,6 +47,9 @@ public class ShipBody : MonoBehaviour {
         }
 
         thrusterForwards = new List<Thruster>();
+        thrusterBackwards = new List<Thruster>();
+        thrusterLeft = new List<Thruster>();
+        thrusterRight = new List<Thruster>();
 
         // Thrusters are in the second child of the ship object
         thrusters = transform.GetChild(1).GetComponentsInChildren<Thruster>();
@@ -57,12 +60,12 @@ public class ShipBody : MonoBehaviour {
         Debug.Log("Weapons found: " + weapons.Length);
 
         FindForwardThrusters();
-
-        // TODO: Sort through available thrusters and figure out where they are on the ship and what they do
-        // Which thursters move the ship forward, rotate, lateral movement, backwards?
-        // Could be calculated by referencing thruster position and ship center of mass position
+        FindBackwardThrusters();
+        FindLeftThrusters();
+        FindRightThrusters();
     }
 
+    // TODO: Create one function to do all this
     private void FindForwardThrusters()
     {
         foreach (Thruster thruster in thrusters)
@@ -74,27 +77,68 @@ public class ShipBody : MonoBehaviour {
         }
     }
 
+    private void FindBackwardThrusters()
+    {
+        foreach (Thruster thruster in thrusters)
+        {
+            if (thruster.transform.localRotation.eulerAngles.z == 180 && (thruster.transform.localPosition.x - centerOfMass.transform.localPosition.x) > 0)
+            {
+                thrusterBackwards.Add(thruster);
+            }
+        }
+    }
+
+    private void FindLeftThrusters()
+    {
+        foreach (Thruster thruster in thrusters)
+        {
+            if (thruster.transform.localRotation.eulerAngles.z == 270 && (thruster.transform.localPosition.y - centerOfMass.transform.localPosition.y) > 0)
+            {
+                thrusterLeft.Add(thruster);
+            }
+            Debug.Log(thruster.gameObject.name + " " + thruster.transform.localRotation.eulerAngles.z + " " + (thruster.transform.localPosition.y - centerOfMass.transform.localPosition.y));
+        }
+        Debug.Log("Found left thrusters: " + thrusterLeft.Count);
+    }
+
+    private void FindRightThrusters()
+    {
+        foreach (Thruster thruster in thrusters)
+        {
+            if (thruster.transform.localRotation.eulerAngles.z == 90 && (thruster.transform.localPosition.y - centerOfMass.transform.localPosition.y) < 0)
+            {
+                thrusterRight.Add(thruster);
+            }
+        }
+    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(forward))
+        fireThrusters(forward, thrusterForwards);
+        fireThrusters(backward, thrusterBackwards);
+        fireThrusters(left, thrusterRight);
+        fireThrusters(right, thrusterLeft);
+
+    }
+
+    private void fireThrusters(KeyCode key, List<Thruster> thrusters)
+    {
+        if (Input.GetKeyDown(key))
         {
-            foreach (Thruster thruster in thrusterForwards)
+            foreach (Thruster thruster in thrusters)
             {
                 thruster.fireThruster = true;
                 thruster.jet.Play();
             }
         }
 
-        if (Input.GetKeyUp(forward))
+        if (Input.GetKeyUp(key))
         {
-            foreach (Thruster thruster in thrusterForwards)
+            foreach (Thruster thruster in thrusters)
             {
                 thruster.fireThruster = false;
                 thruster.jet.Stop();
             }
         }
     }
-    // TODO: Update function
-    // Registers player inputs and calls appropriate thruster to turn on
 }
