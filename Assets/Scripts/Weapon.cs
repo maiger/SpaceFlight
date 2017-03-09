@@ -15,10 +15,6 @@ public class Weapon : MonoBehaviour {
     [Tooltip("Force to be applied to weapon when fired")]
     private float force;
 
-    [SerializeField]
-    [Tooltip("Button to activate weapon")]
-    private KeyCode key;
-
     private Rigidbody2D rb;
 
     void Start()
@@ -26,14 +22,7 @@ public class Weapon : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update () {
-        if (Input.GetKeyDown(key))
-        {
-            Shoot();
-        }
-	}
-
-    void Shoot()
+    public void Shoot()
     {
         Instantiate(projectile, firePoint.position, firePoint.rotation);
         // Add force to the opposite direction of firing. This could be done better by

@@ -26,6 +26,9 @@ public class ShipBody : MonoBehaviour {
     [SerializeField]
     KeyCode rotationLeft = KeyCode.Q;
 
+    [SerializeField]
+    KeyCode fireWeapons = KeyCode.Space;
+
     private Rigidbody2D rb;
 
     private Thruster[] thrusters;
@@ -37,6 +40,7 @@ public class ShipBody : MonoBehaviour {
     private List<Thruster> thrusterRight;
     //private Thruster[] thrusterRotateLeft;
     //private Thruster[] thrusterRotateRight;
+
 
     // Use this for initialization
     void Start () {
@@ -114,14 +118,15 @@ public class ShipBody : MonoBehaviour {
 
     private void Update()
     {
-        fireThrusters(forward, thrusterForwards);
-        fireThrusters(backward, thrusterBackwards);
-        fireThrusters(left, thrusterRight);
-        fireThrusters(right, thrusterLeft);
+        FireThrusters(forward, thrusterForwards);
+        FireThrusters(backward, thrusterBackwards);
+        FireThrusters(left, thrusterRight);
+        FireThrusters(right, thrusterLeft);
 
+        FireWeapons(fireWeapons, weapons);
     }
 
-    private void fireThrusters(KeyCode key, List<Thruster> thrusters)
+    private void FireThrusters(KeyCode key, List<Thruster> thrusters)
     {
         if (Input.GetKeyDown(key))
         {
@@ -138,6 +143,17 @@ public class ShipBody : MonoBehaviour {
             {
                 thruster.fireThruster = false;
                 thruster.jet.Stop();
+            }
+        }
+    }
+
+    private void FireWeapons(KeyCode key, Weapon[] weapons)
+    {
+        if (Input.GetKeyDown(key))
+        {
+            foreach (Weapon weapon in weapons)
+            {
+                weapon.Shoot();
             }
         }
     }
