@@ -38,8 +38,8 @@ public class ShipBody : MonoBehaviour {
     private List<Thruster> thrusterBackwards;
     private List<Thruster> thrusterLeft;
     private List<Thruster> thrusterRight;
-    //private Thruster[] thrusterRotateLeft;
-    //private Thruster[] thrusterRotateRight;
+    private List<Thruster> thrusterRotateLeft;
+    private List<Thruster> thrusterRotateRight;
 
 
     // Use this for initialization
@@ -54,6 +54,8 @@ public class ShipBody : MonoBehaviour {
         thrusterBackwards = new List<Thruster>();
         thrusterLeft = new List<Thruster>();
         thrusterRight = new List<Thruster>();
+        thrusterRotateLeft = new List<Thruster>();
+        thrusterRotateRight = new List<Thruster>();
 
         // Thrusters are in the second child of the ship object
         thrusters = transform.GetChild(1).GetComponentsInChildren<Thruster>();
@@ -67,6 +69,8 @@ public class ShipBody : MonoBehaviour {
         FindBackwardThrusters();
         FindLeftThrusters();
         FindRightThrusters();
+        FindRotateLeftThrusters();
+        FindRotateRightThrusters();
     }
 
     // TODO: Create one function to do all this
@@ -100,9 +104,7 @@ public class ShipBody : MonoBehaviour {
             {
                 thrusterLeft.Add(thruster);
             }
-            Debug.Log(thruster.gameObject.name + " " + thruster.transform.localRotation.eulerAngles.z + " " + (thruster.transform.localPosition.y - centerOfMass.transform.localPosition.y));
         }
-        Debug.Log("Found left thrusters: " + thrusterLeft.Count);
     }
 
     private void FindRightThrusters()
@@ -116,12 +118,46 @@ public class ShipBody : MonoBehaviour {
         }
     }
 
+    private void FindRotateLeftThrusters()
+    {
+        foreach (Thruster thruster in thrusters)
+        {
+            if (thruster.transform.localRotation.eulerAngles.z == 270 && (thruster.transform.localPosition.x - centerOfMass.transform.localPosition.x) < 0)
+            {
+                thrusterRotateLeft.Add(thruster);
+            }
+
+            if (thruster.transform.localRotation.eulerAngles.z == 90 && (thruster.transform.localPosition.x - centerOfMass.transform.localPosition.x) > 0)
+            {
+                thrusterRotateLeft.Add(thruster);
+            }
+        }
+    }
+
+    private void FindRotateRightThrusters()
+    {
+        foreach (Thruster thruster in thrusters)
+        {
+            if (thruster.transform.localRotation.eulerAngles.z == 270 && (thruster.transform.localPosition.x - centerOfMass.transform.localPosition.x) > 0)
+            {
+                thrusterRotateRight.Add(thruster);
+            }
+
+            if (thruster.transform.localRotation.eulerAngles.z == 90 && (thruster.transform.localPosition.x - centerOfMass.transform.localPosition.x) < 0)
+            {
+                thrusterRotateRight.Add(thruster);
+            }
+        }
+    }
+
     private void Update()
     {
         FireThrusters(forward, thrusterForwards);
         FireThrusters(backward, thrusterBackwards);
         FireThrusters(left, thrusterRight);
         FireThrusters(right, thrusterLeft);
+        FireThrusters(rotationLeft, thrusterRotateLeft);
+        FireThrusters(rotationRight, thrusterRotateRight);
 
         FireWeapons(fireWeapons, weapons);
     }
