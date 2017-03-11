@@ -3,12 +3,17 @@
 public class Projectile : MonoBehaviour {
 
     [SerializeField]
-    [Tooltip("Speed of projectile")]
-    private int moveSpeed = 20;
+    [Tooltip("Force applied to the projectile at start")]
+    private int force = 20;
 
-    void Update()
+    private Rigidbody2D rb;
+
+    public void Init(Vector2 parentVelocity)
     {
-        transform.Translate(Vector3.right * Time.deltaTime * moveSpeed);
-        Destroy(gameObject, 1f);
+        rb = GetComponent<Rigidbody2D>();
+
+        rb.velocity = parentVelocity;
+
+        rb.AddForce(transform.right * force);
     }
 }

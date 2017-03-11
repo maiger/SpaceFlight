@@ -24,7 +24,9 @@ public class Weapon : MonoBehaviour {
 
     public void Shoot()
     {
-        Instantiate(projectile, firePoint.position, firePoint.rotation);
+        GameObject projectileInstance =  Instantiate(projectile, firePoint.position, firePoint.rotation);
+        // Add the current velocity of weapon to projectile
+        projectileInstance.GetComponent<Projectile>().Init(rb.velocity);
         // Add force to the opposite direction of firing. This could be done better by
         // making this depend on the projectile used and not a value on the weapon itself.
         rb.AddForce(-transform.right * force);
