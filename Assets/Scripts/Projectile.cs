@@ -14,6 +14,6 @@ public class Projectile : MonoBehaviour {
 
         rb.velocity = parentVelocity;
 
-        rb.AddForce(transform.right * force);
+        //rb.AddForce(transform.right * force);
     }
 }

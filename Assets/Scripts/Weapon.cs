@@ -15,6 +15,9 @@ public class Weapon : MonoBehaviour {
     [Tooltip("Force to be applied to weapon when fired")]
     private float force;
 
+    [SerializeField]
+    private float strayFactor;
+
     private Rigidbody2D rb;
 
     void Start()
@@ -24,9 +27,17 @@ public class Weapon : MonoBehaviour {
 
     public void Shoot()
     {
+        var randomNumberX = Random.Range(-strayFactor, strayFactor);
+        var randomNumberY = Random.Range(-strayFactor, strayFactor);
+        var randomNumberZ = Random.Range(-strayFactor, strayFactor);
+
         GameObject projectileInstance =  Instantiate(projectile, firePoint.position, firePoint.rotation);
         // Add the current velocity of weapon to projectile
         projectileInstance.GetComponent<Projectile>().Init(rb.velocity);
+
+        projectileInstance.transform.Rotate(randomNumberX, randomNumberY, randomNumberZ);
+        projectileInstance.GetComponent<Rigidbody2D>().AddForce(projectileInstance.transform.right * force);
+
         // Add force to the opposite direction of firing. This could be done better by
         // making this depend on the projectile used and not a value on the weapon itself.
         rb.AddForce(-transform.right * force);
