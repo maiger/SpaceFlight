@@ -2,10 +2,6 @@
 
 public class Projectile : MonoBehaviour {
 
-    //[SerializeField]
-    //[Tooltip("Force applied to the projectile at start")]
-    //private int force = 20;
-
     private Rigidbody2D rb;
 
     public void Init(Vector2 parentVelocity)
@@ -13,12 +9,13 @@ public class Projectile : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
 
         rb.velocity = parentVelocity;
-
-        //rb.AddForce(transform.right * force);
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        Destroy(this.gameObject);
+        if(other.gameObject.tag != this.gameObject.tag)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

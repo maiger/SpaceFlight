@@ -41,8 +41,6 @@ public class ShipBody : MonoBehaviour {
     private List<Thruster> thrusterRotateLeft;
     private List<Thruster> thrusterRotateRight;
 
-
-    // Use this for initialization
     void Start () {
 		if(centerOfMass != null)
         {
@@ -65,12 +63,25 @@ public class ShipBody : MonoBehaviour {
         weapons = transform.GetChild(2).GetComponentsInChildren<Weapon>();
         Debug.Log("Weapons found: " + weapons.Length);
 
+        // Find thrusters
         FindForwardThrusters();
         FindBackwardThrusters();
         FindLeftThrusters();
         FindRightThrusters();
         FindRotateLeftThrusters();
         FindRotateRightThrusters();
+    }
+
+    private void Update()
+    {
+        FireThrusters(forward, thrusterForwards);
+        FireThrusters(backward, thrusterBackwards);
+        FireThrusters(left, thrusterRight);
+        FireThrusters(right, thrusterLeft);
+        FireThrusters(rotationLeft, thrusterRotateLeft);
+        FireThrusters(rotationRight, thrusterRotateRight);
+
+        FireWeapons(fireWeapons, weapons);
     }
 
     // TODO: Create one function to do all this
@@ -148,18 +159,6 @@ public class ShipBody : MonoBehaviour {
                 thrusterRotateRight.Add(thruster);
             }
         }
-    }
-
-    private void Update()
-    {
-        FireThrusters(forward, thrusterForwards);
-        FireThrusters(backward, thrusterBackwards);
-        FireThrusters(left, thrusterRight);
-        FireThrusters(right, thrusterLeft);
-        FireThrusters(rotationLeft, thrusterRotateLeft);
-        FireThrusters(rotationRight, thrusterRotateRight);
-
-        FireWeapons(fireWeapons, weapons);
     }
 
     private void FireThrusters(KeyCode key, List<Thruster> thrusters)
